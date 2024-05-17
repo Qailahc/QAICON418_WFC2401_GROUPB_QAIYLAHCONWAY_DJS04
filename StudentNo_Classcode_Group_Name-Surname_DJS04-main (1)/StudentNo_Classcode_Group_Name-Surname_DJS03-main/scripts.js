@@ -36,7 +36,7 @@ class BookPreview extends HTMLElement {
         const title = this.getAttribute('title');
 
         // CHANGED - ADDED 
-        // Creating template
+        // Creating template - Struggled with CSS styles :( 
         const template = document.createElement('template');
         // <style> block containing CSS styles specific to the book preview
         template.innerHTML = `
@@ -241,7 +241,7 @@ const applySearchFilters = (filters) => {
     });
 };
 
-// Event listeners - struggled
+// Event listeners - struggled with getting Elements
 getElement('[data-search-cancel]').addEventListener('click', () => closeOverlay('[data-search-overlay]'));
 getElement('[data-settings-cancel]').addEventListener('click', () => closeOverlay('[data-settings-overlay]'));
 getElement('[data-header-search]').addEventListener('click', () => openOverlay('[data-search-overlay]', '[data-search-title]'));
