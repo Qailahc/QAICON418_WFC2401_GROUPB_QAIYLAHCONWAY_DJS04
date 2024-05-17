@@ -175,17 +175,16 @@ const createOptions = (options, defaultOption, container) => {
 createOptions(genres, 'All Genres', getElement('[data-search-genres]'));
 createOptions(authors, 'All Authors', getElement('[data-search-authors]'));
 
-// CHANGED - MORE CODE
+// UNCHANGED
 // Set theme based on user's preferred color scheme  
 // Setting the theme of the web page based on the user's preferred color scheme
 const applyTheme = (theme) => {
     const isNight = theme === 'night';
     document.documentElement.style.setProperty('--color-dark', isNight ? '255, 255, 255' : '10, 10, 20');
     document.documentElement.style.setProperty('--color-light', isNight ? '10, 10, 20' : '255, 255, 255');
-    getElement('[data-settings-theme]').value = isNight ? 'night' : 'day';                // added this line - code wouldn't run without it
+   
 };
-// checks if the user's system prefers a dark color scheme, if not displays day theme
-applyTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day');  // added this line - code wouldn't run without it
+
 
 
 // Function to update the "Show more" button text and state
