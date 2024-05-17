@@ -10,8 +10,8 @@ class BookPreview extends HTMLElement {
         return ['author', 'id', 'image', 'title'];
     }
 
-    constructor() {
-        super(); // is used to call the constructor of the parent class - HTMLElement
+    constructor() {  // always call super first in constructor
+        super(); // is used to call the constructor of the parent class - HTMLElement - 
         this.attachShadow({ mode: 'open' });  // attaches a shadow DOM to the custom element
         // { mode: 'open' } indicates that the shadow DOM is open for manipulation from outside the component
     }
@@ -36,7 +36,7 @@ class BookPreview extends HTMLElement {
         const title = this.getAttribute('title');
 
         // CHANGED - ADDED 
-        // Creating template - Struggled with CSS styles - got CSS styles from stylrd.css files 
+        // Creating template - Struggled with CSS styles - got CSS styles from styles.css files 
         const template = document.createElement('template');
         // <style> block containing CSS styles specific to the book preview
         template.innerHTML = `
