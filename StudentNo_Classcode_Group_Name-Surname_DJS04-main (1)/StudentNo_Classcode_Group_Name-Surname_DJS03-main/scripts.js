@@ -2,8 +2,8 @@
 import { books, authors, genres, BOOKS_PER_PAGE } from './data.js';
 
 
-// CHANGED - ADDED
-// Define the BookPreview class
+// CHANGED - ADDED 
+// Define the BookPreview class - Struggled with ShadowRoot and using 'this' - used 'mdn web doc - using custom element' guide
 // A static getter method used to specify which attributes of BookPreview should be monitored for changes
 class BookPreview extends HTMLElement {
     static get observedAttributes() {
@@ -171,7 +171,7 @@ const createOptions = (options, defaultOption, container) => {
 };
 
 // CHANGED - ADDED
-// Populate genre and author dropdowns 
+// Populate genre and author dropdowns
 createOptions(genres, 'All Genres', getElement('[data-search-genres]'));
 createOptions(authors, 'All Authors', getElement('[data-search-authors]'));
 
@@ -182,10 +182,10 @@ const applyTheme = (theme) => {
     const isNight = theme === 'night';
     document.documentElement.style.setProperty('--color-dark', isNight ? '255, 255, 255' : '10, 10, 20');
     document.documentElement.style.setProperty('--color-light', isNight ? '10, 10, 20' : '255, 255, 255');
-    getElement('[data-settings-theme]').value = isNight ? 'night' : 'day';                // added this line
+    getElement('[data-settings-theme]').value = isNight ? 'night' : 'day';                // added this line - code wouldn't run without it
 };
 // checks if the user's system prefers a dark color scheme, if not displays day theme
-applyTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day');  // added this line
+applyTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day');  // added this line - code wouldn't run without it
 
 
 // Function to update the "Show more" button text and state
@@ -241,7 +241,7 @@ const applySearchFilters = (filters) => {
     });
 };
 
-// Event listeners - struggled with getting Elements
+// Event listeners - struggled with getting Elements - waasn't working without arrow function, so added them
 getElement('[data-search-cancel]').addEventListener('click', () => closeOverlay('[data-search-overlay]'));
 getElement('[data-settings-cancel]').addEventListener('click', () => closeOverlay('[data-settings-overlay]'));
 getElement('[data-header-search]').addEventListener('click', () => openOverlay('[data-search-overlay]', '[data-search-title]'));
@@ -300,7 +300,7 @@ getElement('[data-list-button]').addEventListener('click', () => {
 });
 
 // CHANGED 
-// Event Path Extraction
+// Event Path Extraction - struggled with composedPath method and dataset (didn't add the question marks in code)
 getElement('[data-list-items]').addEventListener('click', (event) => {
     // Returns an array of elements that the event passed through (from the target element to the root).
     // Array.from() converts this path into a proper array for easier manipulation
