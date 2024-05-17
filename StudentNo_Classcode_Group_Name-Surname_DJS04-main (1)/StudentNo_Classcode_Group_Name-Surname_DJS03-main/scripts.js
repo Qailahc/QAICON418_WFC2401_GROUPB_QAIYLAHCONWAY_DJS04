@@ -36,7 +36,7 @@ class BookPreview extends HTMLElement {
         const title = this.getAttribute('title');
 
         // CHANGED - ADDED 
-        // Creating template - Struggled with CSS styles :( 
+        // Creating template - Struggled with CSS styles - got CSS styles from stylrd.css files 
         const template = document.createElement('template');
         // <style> block containing CSS styles specific to the book preview
         template.innerHTML = `
