@@ -128,19 +128,46 @@ let matches = books; // Initially, matches contain all books
 // takes a CSS selector as input and returns the first element in the document that matches the selector
 const getElement = (selector) => document.querySelector(selector);
 
-// CHANGED - LESS CODE
+// CHANGED
 // Function to create and append book previews using the Web Component  
 // This function is responsible for creating and appending book previews to a specified container element
 const bookPreviews = (books, container) => {
+    if (!Array.isArray(books) || !container) {
+        console.error('Invalid books array or container element');
+        return;
+    }
+
     const fragment = document.createDocumentFragment();
+
     books.forEach(({ author, id, image, title }) => {
-        const element = document.createElement('book-preview');
-        element.setAttribute('author', author);
-        element.setAttribute('id', id);
-        element.setAttribute('image', image);
-        element.setAttribute('title', title);
+        const element = document.createElement('button');
+        element.classList.add('preview');
+        element.dataset.preview = id;
+
+        const img = document.createElement('img');
+        img.classList.add('preview__image');
+        img.src = image;
+        img.alt = `${title} cover`;
+
+        const infoDiv = document.createElement('div');
+        infoDiv.classList.add('preview__info');
+
+        const titleElement = document.createElement('h3');
+        titleElement.classList.add('preview__title');
+        titleElement.textContent = title;
+
+        const authorElement = document.createElement('div');
+        authorElement.classList.add('preview__author');
+        authorElement.textContent = authors[author];
+
+        infoDiv.appendChild(titleElement);
+        infoDiv.appendChild(authorElement);
+        element.appendChild(img);
+        element.appendChild(infoDiv);
+
         fragment.appendChild(element);
     });
+
     container.appendChild(fragment);
 };
 
@@ -156,10 +183,10 @@ const createOptions = (options, defaultOption, container) => {
     // document fragment (fragment) to hold the options before appending them to the container - Improves performance by reducing DOM manipulation
     const fragment = document.createDocumentFragment();
     // acts as a placeholder or initial instruction
-    const firstOption = document.createElement('option');
-    firstOption.value = 'any';
-    firstOption.innerText = defaultOption;
-    fragment.appendChild(firstOption);
+    const optionOne = document.createElement('option');
+    optionOne.value = 'any';
+    optionOne.innerText = defaultOption;
+    fragment.appendChild(optionOne);
     // For each entry, it creates an <option> element with a value equal to the key (id) and inner text equal to the value (name)
     Object.entries(options).forEach(([id, name]) => {
         const element = document.createElement('option');
@@ -169,11 +196,6 @@ const createOptions = (options, defaultOption, container) => {
     });
     container.appendChild(fragment);
 };
-
-// CHANGED - ADDED
-// Populate genre and author dropdowns
-createOptions(genres, 'All Genres', getElement('[data-search-genres]'));
-createOptions(authors, 'All Authors', getElement('[data-search-authors]'));
 
 // UNCHANGED
 // Set theme based on user's preferred color scheme  
@@ -191,7 +213,7 @@ const colourTheme = (theme) => {
 // function ensures that the button accurately reflects the state of the book list 
 // and provides a better user experience by preventing unnecessary actions
 
-// CHANGED - LESS CODE
+// CHANGED
 // Update "Show more" button text and state 
 const showMoreButton = () => {
     //  calculates the remainingBooks by subtracting the number of books already displayed (page * BOOKS_PER_PAGE) from the total number of books (matches.length)
@@ -201,11 +223,11 @@ const showMoreButton = () => {
     // sets the button's innerText to display the text "Show more" along with the number of remaining books
     button.innerText = `Show more (${remainingBooks})`;
     // disables the button if there are no remaining books
-    button.disabled = remainingBooks <= 0;
     button.innerHTML = `
         <span>Show more</span>
         <span class="list__remaining">(${remainingBooks > 0 ? remainingBooks : 0})</span>
     `;
+    button.disabled = remainingBooks <= 0;
 };
 
 showMoreButton();
@@ -321,3 +343,8 @@ getElement('[data-list-items]').addEventListener('click', (event) => {
         }
     }
 });
+
+// CHANGED - ADDED
+// Populate genre and author dropdowns
+createOptions(genres, 'All Genres', getElement('[data-search-genres]'));
+createOptions(authors, 'All Authors', getElement('[data-search-authors]'));
